@@ -1,0 +1,8 @@
+<view class="container">
+	<image src="../../images/timg.jpg" class="user-avatar"></image>
+	<!-- 只有text包围的文字才可以长按选中 -->
+	<text class="user-name"><text style="color:red">Hello</text>,Cat</text>
+	<view class="moto-container" catchtap="onTap">
+		<text class="moto">Into Reader</text>
+	</view>
+</view>
