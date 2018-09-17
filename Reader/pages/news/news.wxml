@@ -1,4 +1,5 @@
 <!--pages/news/news.wxml-->
+<import src="news-item/news-item-template.wxml" />
 <view>
   <!-- 轮播图 -->
   <swiper catchtap='onSwiperTap' vertical="{{false}}" indicator-dots="true" autoplay="true" interval="5000" duration="600">
@@ -12,4 +13,10 @@
       <image src="/images/iqiyi.png" data-postId="5"></image>
     </swiper-item>
   </swiper>
+  <!-- 文章列表页 -->
+  <block wx:for="{{postList}}" wx:key="idx" wx:for-item="item" wx:for-index="idx">
+    <view catchtap='onPostTap' data-postId='{{item.postId}}'>
+      <template is="postItem" data="{{...item}}" />
+    </view>
+  </block>
 </view>
