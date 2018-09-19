@@ -13,7 +13,6 @@ Page({
   onLoad: function (option) {
     
     var postId = option.id
-    console.log(postId)
     this.setData({
       currentPostId: postId
     })
@@ -28,6 +27,19 @@ Page({
       })
     }
     this.setMusicMonitor()
+    // 根据缓存判断是否已收藏
+    var postsCollected = wx.getStorageSync('posts_collected')
+    if (postsCollected) {
+      var postCollected = postsCollected[postId]
+      this.setData({
+        collected: postCollected
+      })
+    } else {
+      // 如果没有缓存，就添加缓存
+      var postsCollected = {}
+      postsCollected[postId] = false
+      wx.setStorageSync('posts_collected', postsCollected)
+    }
   },
   // 监听全局的音乐播放暂停
   setMusicMonitor: function () {
@@ -64,7 +76,6 @@ Page({
   isMusicPlaying: function (flag) {
     var that = this
     if (flag) {
-      console.log('isplay')
       if (app.globalData.g_currentMusicPostId === that.data.currentPostId){
         that.setData({
           isPlayingMusic: true
@@ -72,13 +83,31 @@ Page({
       }
       app.globalData.g_isPlayingMusic = true
     } else {
-      console.log('isclose')
       that.setData({
         isPlayingMusic: false
       })
       app.globalData.g_isPlayingMusic = false
       // app.globalData.g_currentMusicPostId = null
     }
+  },
+  // 点击收藏事件
+  onColletionTap () {
+    var postsCollected = wx.getStorageSync('posts_collected')
+    var postCollected = postsCollected[this.data.currentPostId]
+    // 收藏变成未收藏，未收藏变为收藏
+    postCollected = !postCollected
+    postsCollected[this.data.currentPostId] = postCollected
+    wx.setStorageSync('posts_collected', postsCollected)
+    this.showToast(postsCollected, postCollected)
+  },
+  showToast (postsCollected, postCollected) {
+    this.setData({
+      collected: postCollected
+    })
+    wx.showToast({
+      title: postCollected ? "收藏成功" : "取消成功",
+      duration: 1000,
+      icon: "success"
+    })
   }
-
 })
