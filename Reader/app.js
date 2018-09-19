@@ -1,5 +1,10 @@
 //app.js
 App({
+  globalData: {
+    g_isPlayingMusic: false,
+    g_currentMusicPostId: null,
+    doubanBase: "http://t.yushu.im"
+  },
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []

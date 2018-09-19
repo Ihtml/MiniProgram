@@ -26,14 +26,14 @@ Page({
     // target这里指的是image，而currentTarget指的是swiper
     var postId = event.target.dataset.postid
     wx.navigateTo({
-      url: 'post-detail/post-detail?id=' + postId
+      url: 'news-detail/news-detail?id=' + postId
     })
   },
   
   onPostTap: function (event) {
     var postId = event.currentTarget.dataset.postid;
     wx.navigateTo({
-      url: "post-detail/post-detail?id=" + postId
+      url: "news-detail/news-detail?id=" + postId
     })
   }
 })
