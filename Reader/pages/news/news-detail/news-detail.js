@@ -8,7 +8,7 @@ Page({
     isPlayingMusic: false,
     currentPostId: '',
     postData: '',
-    collected: ''
+    collected: false
   },
   onLoad: function (option) {
     
@@ -31,9 +31,11 @@ Page({
     var postsCollected = wx.getStorageSync('posts_collected')
     if (postsCollected) {
       var postCollected = postsCollected[postId]
-      this.setData({
-        collected: postCollected
-      })
+      if (postCollected) {
+        this.setData({
+          collected: postCollected
+        })
+      }
     } else {
       // 如果没有缓存，就添加缓存
       var postsCollected = {}
@@ -92,6 +94,7 @@ Page({
   },
   // 点击收藏事件
   onColletionTap () {
+    // 尽量使用同步的方法
     var postsCollected = wx.getStorageSync('posts_collected')
     var postCollected = postsCollected[this.data.currentPostId]
     // 收藏变成未收藏，未收藏变为收藏
@@ -109,5 +112,30 @@ Page({
       duration: 1000,
       icon: "success"
     })
+  },
+  // 点击分享
+  onShareTap () {
+    var itemList = ["分享给好友", "分享到朋友圈", "分享给QQ好友", "分享到QQ空间"]
+    wx.showActionSheet({
+      itemList: itemList,
+      itemColor: "#405f80",
+      success: function (res) {
+        wx.showModal({
+          title: itemList[res.tapIndex],
+          content: '是否取消？' + res.cancel + "现在暂时无法实现分享功能"
+        })
+      }
+    })
+  },
+
+  /*
+  * 定义页面分享函数
+  */
+  onShareAppMessage: function (event) {
+    return {
+      title: this.data.postData.title,
+      // desc: '曾经沧海难为水，除却巫山不是云',
+      path: '/pages/posts/post-detail/post-detail?id=' + this.currentPostId
+    }
   }
 })
