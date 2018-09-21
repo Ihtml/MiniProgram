@@ -24,5 +24,13 @@ Page({
       current: src, // 当前显示图片的http链接
       urls: [src] // 需要预览的图片http链接列表
     })
+  },
+  // 分享电影
+  onShareAppMessage: function (event) {
+    return {
+      title: this.data.movie.title,
+      desc: '我觉得这部电影不错，推荐你观看',
+      path: '/pages/movies/movie-detail/movie-detail?id='+this.data.movie.id
+    }
   }
 })
