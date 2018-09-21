@@ -8,8 +8,7 @@ Page({
     top250: {},
     searchResult: {},
     containerShow: true,
-    searchPanelShow: false,
-    readyData: {}
+    searchPanelShow: false
   },
 
   /**
@@ -68,6 +67,28 @@ Page({
       categoryTitle: categoryTitle,
       movies: movies
     }
+    // 设置inTheaters,comingSoon,top250,searchResult的数据
     this.setData(readyData);
-  }
+  },
+
+  onBindFocus: function (event) {
+    this.setData({
+      containerShow: false,
+      searchPanelShow: true
+    })
+  },
+
+  onBindConfirm: function (event) {
+    const text = event.detail.value;
+    const searchUrl = app.globalData.doubanBase + "/v2/movie/search?q=" + text;
+    this.getMovieListData(searchUrl, "searchResult", "");
+  },
+
+  onCancelImgTap: function (event) {
+    this.setData({
+      containerShow: true,
+      searchPanelShow: false,
+      searchResult: {}
+    })
+  },
 })

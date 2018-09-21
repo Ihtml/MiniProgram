@@ -15,11 +15,11 @@
   </view>
 
   <view class='movies-template'>
-    <template is="movieListTemplate" data="{{...inTheaters}}" />
+    <template is="movieListTemplate" data="{{...comingSoon}}" />
   </view>
 
   <view class='movies-template'>
-    <template is="movieListTemplate" data="{{...inTheaters}}" />
+    <template is="movieListTemplate" data="{{...top250}}" />
   </view>
 </view>
 
